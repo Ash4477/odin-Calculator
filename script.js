@@ -38,6 +38,20 @@ function getEquationValues(equationString) {
     return [...equationString.split(operator), operator];
 }
 
+function getResult(equationString) {
+    let num1;
+    let num2;
+    let opr;
+
+    [num1,num2,opr] = getEquationValues(equationString);
+    const result = operate((Number)(num1), opr, (Number)(num2));
+    if (result === Infinity) {
+        clearScreen();
+        return Infinity;
+    }
+    return result;
+}
+
 function clearScreen() {
     document.querySelector("#screen").textContent = "";
     eqnCheck = [false,false,false];
@@ -84,14 +98,8 @@ operatorBtns.forEach(btn => {
 
         else if (eqnCheck[2] == true) {
             eqnCheck[2] = false;
-            let num1;
-            let num2;
-            let opr;
-
-            [num1,num2,opr] = getEquationValues(screen.textContent);
-            const result = operate((Number)(num1), opr, (Number)(num2));
+            const result = getResult(screen.textContent);
             if (result === Infinity) {
-                clearScreen();
                 return;
             }
             screen.textContent = result;
@@ -99,4 +107,22 @@ operatorBtns.forEach(btn => {
         eqnCheck[1] = true;
         screen.textContent += btn.textContent;
     });
+});
+
+
+equalBtn.addEventListener("click", () => {
+    const screen = document.querySelector("#screen");
+
+    if (eqnCheck[2] == true) {
+        screen.textContent = getResult(screen.textContent);
+        eqnCheck = [true, false, false];
+    }
+
+    else if (eqnCheck[1] == false) {
+        return;
+    }
+
+    else if (eqnCheck[1] == true) {
+        screen.textContent = screen.textContent.slice(0,-1);
+    }
 });
