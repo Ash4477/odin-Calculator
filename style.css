@@ -50,6 +50,7 @@ body{
 }
 
 #screen{
+    overflow: hidden;
     text-align: right;
     font-size: 2rem;
     padding: 1rem;
@@ -90,6 +91,11 @@ button{
 
 button:hover{
     transform: translate(0, -3px);
+    transition: transform 0.2s ease;
+}
+
+button:active {
+    transform: translate(0, 0);
     transition: transform 0.2s ease;
 }
 
