@@ -50,6 +50,10 @@ body{
 }
 
 #screen{
+    text-align: right;
+    font-size: 2rem;
+    padding: 1rem;
+    margin: 0;
     width: 100%;
     height: 100%;
     background-color: var(--calc-screen);
@@ -113,4 +117,8 @@ button:hover{
 #equal-btn:hover{
     background-color: var(--button-equal);
     color: var(--calc-body);
+}
+
+footer {
+    text-align: center;
 }
