@@ -37,7 +37,23 @@ function getEquationValues(equationString) {
     return [...equationString.split(operator), operator];
 }
 
-let number1;
-let number2;
-let operator;
 let eqnCheck = [false,false,false]; // for checking what values (num1, num2, or operator) haven been input in the screen
+
+const numberBtns = document.querySelectorAll(".number-btn");
+const operatorBtns = document.querySelectorAll(".operator-btn");
+const clearBtns = document.querySelectorAll(".clear-btn");
+const equalBtn = document.querySelector("#equal-btn");
+
+numberBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const screen = document.querySelector("#screen");
+        if (screen.textContent == "")
+            eqnCheck[0] = true;
+        
+        else {
+            if (eqnCheck[1] == true)
+                eqnCheck[2] = true;
+        }
+        screen.textContent += btn.textContent;
+    });
+});
