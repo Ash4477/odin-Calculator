@@ -44,17 +44,26 @@ function getResult(equationString) {
     let opr;
 
     [num1,num2,opr] = getEquationValues(equationString);
-    const result = operate((Number)(num1), opr, (Number)(num2));
+    let result = operate((Number)(num1), opr, (Number)(num2));
     if (result === Infinity) {
         clearScreen();
         return Infinity;
     }
+
+    if (!Number.isInteger(result)) {
+        result = result.toFixed(2);
+    }
+
     return result;
 }
 
 function clearScreen() {
     document.querySelector("#screen").textContent = "";
     eqnCheck = [false,false,false];
+}
+
+function isOperator(value) {
+    return ["+","-","x","÷","%"].includes(value);
 }
 
 let eqnCheck = [false,false,false]; // for checking what values (num1, num2, or operator) haven been input in the screen
@@ -109,12 +118,49 @@ operatorBtns.forEach(btn => {
     });
 });
 
+clearBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const screen = document.querySelector("#screen");
+        
+        if (screen.textContent == "") {
+            return;
+        }
+        else if (btn.id == "all-clear"){
+            clearScreen();
+        }
+        else{
+            const screenArr = screen.textContent.split("");
+            const oldLast = screenArr.pop();
+            const newLast = screenArr.pop();
+            screen.textContent = screen.textContent.slice(0,-1);
+            if (isOperator(oldLast)) {
+                eqnCheck[1] = false;
+            }
+            else {
+                if (eqnCheck[2] == true) {
+                    if (isOperator(newLast)){
+                        eqnCheck[2] = false;
+                    }
+                }
+                else if (eqnCheck[0] == true) {
+                    if (newLast === undefined) {
+                        eqnCheck[0] = false;
+                    }
+                }
+            }
+        }
+    });
+});
 
 equalBtn.addEventListener("click", () => {
     const screen = document.querySelector("#screen");
 
     if (eqnCheck[2] == true) {
-        screen.textContent = getResult(screen.textContent);
+        const result = getResult(screen.textContent);
+        if (result === Infinity) {
+            return;
+        }
+        screen.textContent = result;
         eqnCheck = [true, false, false];
     }
 
