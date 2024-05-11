@@ -29,12 +29,15 @@ function operate(first_number,operator,second_number){
     }
 }
 
-// error for negative first number
 function getEquationValues(equationString) {
-    let operator = equationString.split("").find(item => {
+    let findOprArray = equationString;
+    if (equationString.charAt(0) == "-") {
+        findOprArray = equationString.slice(1);
+    }
+    let operator = findOprArray.split("").find(item => {
        return (item == "+" || item == "-" || item == "÷" || item == "x" || item == "%");
     })
-    console.log(operator);
+    console.log(...equationString.split(operator));
     return [...equationString.split(operator), operator];
 }
 
@@ -121,7 +124,6 @@ numberBtns.forEach(btn => {
 operatorBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         const screen = document.querySelector("#screen");
-        // fix later
         if (screen.textContent == "") {
             if (btn.textContent == "-"){
                 eqnCheck[0] = true;
