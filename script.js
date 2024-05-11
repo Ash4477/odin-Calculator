@@ -59,14 +59,14 @@ function getResult(equationString) {
 
 function clearScreen() {
     document.querySelector("#screen").textContent = "";
-    eqnCheck = [false,false,false];
+    eqnCheck = [false,false,false,false,false];
 }
 
 function isOperator(value) {
     return ["+","-","x","÷","%"].includes(value);
 }
 
-let eqnCheck = [false,false,false]; // for checking what values (num1, num2, or operator) haven been input in the screen
+let eqnCheck = [false,false,false,false,false]; // for checking what values (num1, num2, operator, decimalCheck1, decimalCheck2) haven been input in the screen
 
 const numberBtns = document.querySelectorAll(".number-btn");
 const operatorBtns = document.querySelectorAll(".operator-btn");
@@ -76,7 +76,36 @@ const equalBtn = document.querySelector("#equal-btn");
 numberBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         const screen = document.querySelector("#screen");
-        if (screen.textContent == ""){
+
+        if (btn.textContent == ".") {
+            if (screen.textContent == "") {
+                screen.textContent = "0";
+                eqnCheck[0] = true;
+                eqnCheck[1] = true;
+            }
+
+            else if (eqnCheck[1] == true) {
+                if (eqnCheck[4] == false) {
+                    eqnCheck[4] = true;
+                }
+    
+                else {
+                    return;
+                }
+            }
+
+            else {
+                if (eqnCheck[3] == false) {
+                    eqnCheck[3] = true;
+                }
+    
+                else {
+                    return;
+                }
+            }
+        }
+
+        else if (screen.textContent == ""){
             eqnCheck[0] = true;
         }
         
@@ -133,6 +162,16 @@ clearBtns.forEach(btn => {
             const oldLast = screenArr.pop();
             const newLast = screenArr.pop();
             screen.textContent = screen.textContent.slice(0,-1);
+
+            if (oldLast == ".") {
+                if (eqnCheck[1] == true) {
+                    eqnCheck[4] = false;
+                }
+                else {
+                    eqnCheck[3] = false;
+                }
+            }
+
             if (isOperator(oldLast)) {
                 eqnCheck[1] = false;
             }
@@ -161,7 +200,9 @@ equalBtn.addEventListener("click", () => {
             return;
         }
         screen.textContent = result;
-        eqnCheck = [true, false, false];
+        eqnCheck[1] = false;
+        eqnCheck[2] = false;
+        eqnCheck[4] = false;
     }
 
     else if (eqnCheck[1] == false) {
