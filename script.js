@@ -69,6 +69,31 @@ function isOperator(value) {
     return ["+","-","x","÷","%"].includes(value);
 }
 
+function handleKeyPress(event) {
+    switch (event.key) {
+        case "0" : document.querySelector("#number-0").click();break;
+        case "1" : document.querySelector("#number-1").click();break;
+        case "2" : document.querySelector("#number-2").click();break;
+        case "3" : document.querySelector("#number-3").click();break;
+        case "4" : document.querySelector("#number-4").click();break;
+        case "5" : document.querySelector("#number-5").click();break;
+        case "6" : document.querySelector("#number-6").click();break;
+        case "7" : document.querySelector("#number-7").click();break;
+        case "8" : document.querySelector("#number-8").click();break;
+        case "9" : document.querySelector("#number-9").click();break;
+        case "." : document.querySelector("#number-decimal").click();break;
+        case "+" : document.querySelector("#opr-plus").click();break;
+        case "-" : document.querySelector("#opr-minus").click();break;
+        case "*" : document.querySelector("#opr-mult").click();break;
+        case "/" : document.querySelector("#opr-div").click();break;
+        case "%" : document.querySelector("#opr-mod").click();break;
+        case "Backspace" : document.querySelector("#single-clear").click();break;
+        case "Escape" : document.querySelector("#all-clear").click();break;
+        case "Enter" : document.querySelector("#equal-btn").click();break;
+        default : return;
+    }
+}
+
 let eqnCheck = [false,false,false,false,false]; // for checking what values (num1, num2, operator, decimalCheck1, decimalCheck2) haven been input in the screen
 
 const numberBtns = document.querySelectorAll(".number-btn");
@@ -215,3 +240,5 @@ equalBtn.addEventListener("click", () => {
         screen.textContent = screen.textContent.slice(0,-1);
     }
 });
+
+document.addEventListener('keydown', handleKeyPress);
